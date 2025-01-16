@@ -1,0 +1,28 @@
+<button onclick="myFunction()">Click me</button>
+<div>
+  Num: <input type="number" id="num_cred" value="1"/>
+</div>
+
+<p id="demo"></p>
+
+<script>
+function myFunction() {
+  let numcreds = document.getElementById("num_cred").value;
+  let options = {
+    publicKey: {
+      challenge: new Uint8Array([0]),
+      timeout: 100000000,
+      allowCredentials: [],
+    }
+  };
+  for (let i = 0; i < numcreds; i++) {
+    options.publicKey.allowCredentials.push({
+      type: "public-key",
+      id: new Uint8Array([0]),
+      transports: ["usb", "nfc"],
+    });
+  }
+  navigator.credentials.get(options);
+}
+
+</script>
