@@ -1,11 +1,35 @@
-<button onclick="myFunction()">Click me</button>
 <div>
   Num: <input type="number" id="num_cred" value="1"/>
 </div>
 
+<button onclick="myFunction()">get</button>
+<button onclick="myFunction2()">make</button>
 <p id="demo"></p>
 
 <script>
+
+function myFunction2() {
+  let numcreds = document.getElementById("num_cred").value;
+  let options = {
+    publicKey: {
+      rp: {id: "pascoej.github.io", "name":"eee"},
+      user: {id: new Uint8Array([0]), "name":"Eee",displayName:"eeee"},
+      challenge: new Uint8Array([0]),
+      timeout: 100000000,
+      excludeCredentials: [],
+      authenticatorSelection: { authenticatorAttachment: "cross-platform"},
+      pubKeyCredParams: [{type: "public-key", alg: -8}],
+    }
+  };
+  for (let i = 0; i < numcreds; i++) {
+    options.publicKey.excludeCredentials.push({
+      type: "public-key",
+      id: new Uint8Array([0]),
+      transports: ["usb", "nfc"],
+    });
+  }
+  navigator.credentials.create(options);
+}
 function myFunction() {
   let numcreds = document.getElementById("num_cred").value;
   let options = {
@@ -24,5 +48,4 @@ function myFunction() {
   }
   navigator.credentials.get(options);
 }
-
 </script>
